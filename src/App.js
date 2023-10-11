@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import "./App.css";
+import { useDispatch } from "react-redux";
+import { addToCart } from "./components/addtoCartAction";
+import { Route, Routes } from "react-router";
+import Profile from "./components/RouterComponents/Profile";
+import SubProfile from "./components/RouterComponents/SubProfile";
+import RouterNavigators from "./components/RouterComponents/RouterNavigator";
+import ErrorRoute from "./components/RouterComponents/ErrorRoute";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addToCart());
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <RouterNavigators />
+      <Routes>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="subprofile" element={<SubProfile />} />
+        <Route path="/*" element={<ErrorRoute />} />
+      </Routes>
+      ;
     </div>
   );
 }
